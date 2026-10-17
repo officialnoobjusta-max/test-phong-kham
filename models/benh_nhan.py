@@ -50,9 +50,10 @@ class BenhNhan(Nguoi):
         d = super().to_dict()
         d.update({
             "so_bhyt": self._so_bhyt,
+            "email": self._email,
             "tien_su_benh": self._tien_su_benh,
             "nhom_mau": self._nhom_mau,
-            "ngay_tham_kham": str(self._ngay_tham_kham)
+            "ngay_tham_kham": str(self.ngay_tham_kham)
         })
         return d
 
@@ -61,9 +62,9 @@ class BenhNhan(Nguoi):
         return cls(
                     **Nguoi._truong_chung_tu_dict(d),
                     so_bhyt=d["so_bhyt"],
+                    email=d["email"],
                     tien_su_benh=d["tien_su_benh"],
                     nhom_mau=d["nhom_mau"],
-                    ngay_tham_kham=date.fromisoformat(d["ngay_tham_kham"])
                 )
     
     def __str__(self):
