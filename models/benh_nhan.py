@@ -1,14 +1,16 @@
 from models.nguoi import Nguoi
-from utils.validators import la_email_hop_le
+from utils.validators import la_email_hop_le, la_ma_benh_nhan_hop_le, ngay_tu_ma_benh_nhan
 from datetime import date
 
 class BenhNhan(Nguoi):
     def __init__(self, ma_dinh_danh, ho_ten, dia_chi, tinh_thanh, xa_phuong, gioi_tinh, ngay_sinh, sdt, so_bhyt, tien_su_benh, nhom_mau, email ):
+        if not la_ma_benh_nhan_hop_le(ma_dinh_danh):
+            raise ValueError("Mã bệnh nhân phải gồm 14 chữ số, 8 số đầu là ngày hợp lệ!")
         super().__init__(ma_dinh_danh, ho_ten, dia_chi, tinh_thanh, xa_phuong, gioi_tinh, ngay_sinh, sdt)
         self.so_bhyt=so_bhyt
         self._tien_su_benh=tien_su_benh
         self._nhom_mau=nhom_mau
-        self._email=email
+        self.email=email
 
     @property
     def so_bhyt(self):
@@ -31,7 +33,7 @@ class BenhNhan(Nguoi):
 
     @property
     def ngay_tham_kham(self):
-        return self._ma_dinh_danh[0:7]
+        return ngay_tu_ma_benh_nhan(self._ma_dinh_danh)
 
     @property
     def email(self):
@@ -68,5 +70,5 @@ class BenhNhan(Nguoi):
             return super().__str__() + (f"Số BHYT: {self._so_bhyt}\n"
                  f"Nhóm máu: {self._nhom_mau}\n"
                  f"Tiền sử bệnh: {self._tien_su_benh}\n"
-                 f"Ngày thăm khám: {self._ngay_tham_kham}\n")
+                 f"Ngày thăm khám: {self.ngay_tham_kham}\n")
         
