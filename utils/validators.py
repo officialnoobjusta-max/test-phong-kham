@@ -1,6 +1,9 @@
 from datetime import date
 import re
 
+def la_email_hop_le(email):
+    return bool(re.fullmatch(r"[\w.+-]+@[\w-]+(\.[\w-]+)+", email))
+
 def la_ma_bac_si_hop_le(ma):
     return bool(re.fullmatch(r"\d{9}", ma))
 

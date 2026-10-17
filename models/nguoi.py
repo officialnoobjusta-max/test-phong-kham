@@ -2,17 +2,40 @@ from abc import ABC, abstractmethod
 from datetime import date
 
 class Nguoi(ABC):
-    def __init__(self,ma_dinh_danh, ho_ten, dia_chi, gioi_tinh, ngay_sinh, sdt):
+    def __init__(self,ma_dinh_danh, ho_ten, dia_chi, tinh_thanh, xa_phuong, gioi_tinh, ngay_sinh, sdt):
         self._ma_dinh_danh=ma_dinh_danh
         self.ho_ten=ho_ten
         self._gioi_tinh=gioi_tinh
         self._ngay_sinh=ngay_sinh
         self._dia_chi=dia_chi
+        self._tinh_thanh = tinh_thanh
+        self._xa_phuong = xa_phuong
         self.sdt=sdt
 
+
     @property
-    def dia_chi(self):
-        return self._dia_chi
+    def tinh_thanh(self):
+        return self._tinh_thanh
+
+    @tinh_thanh.setter
+    def tinh_thanh(self, value):
+        if not value or not value.strip():
+            raise ValueError("Tỉnh/Thành phố không được rỗng!")
+        self._tinh_thanh = value.strip()
+
+    @property
+    def xa_phuong(self):
+        return self._xa_phuong
+
+    @xa_phuong.setter
+    def xa_phuong(self, value):
+        if not value or not value.strip():
+            raise ValueError("Xã/Phường không được rỗng!")
+        self._xa_phuong = value.strip()
+
+    @property
+    def dia_chi_day_du(self):
+        return f"{self._dia_chi}, {self._xa_phuong}, {self._tinh_thanh}"
 
     @property
     def ma_dinh_danh(self):
